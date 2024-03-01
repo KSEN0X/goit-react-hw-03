@@ -5,39 +5,37 @@ import ContactForm from '../ContactForm/ContactForm';
 import ContactList from '../ContactList/ContactList';
 import SearchBox from '../SearchBox/SearchBox';
 
-//ф-ція що зчитує значення localStorage
+// localStorage
 const getInitialContacts = () => {
   const savedContacts = window.localStorage.getItem('contacts');
-  // если (savedContacts есть)getItem не вернет ноль, то истина: JSON.parse() для преобразования JSON  в объект, если ложь:
+ 
   return savedContacts !== null ? JSON.parse(savedContacts) : initialContacts;
 };
 
 export default function App() {
-  //Оголошуємо стани
-  const [contacts, setContacts] = useState(getInitialContacts); // початковий стан контактів
-  const [filter, setFilter] = useState(''); // початковий стан фільтра пошуку SearchBox
+  //state
+  const [contacts, setContacts] = useState(getInitialContacts); // state contact
+  const [filter, setFilter] = useState(''); // filter state
 
-  // змінна де зберігаємо відфільтровані контакти не записуючи в стан, пропс до ContactList
   const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
 
-  // для колекції елементів використовують функціональну форму сеттеру!
-  // ф-ція повертає змінений стану контактів (додавання)
+ 
   const addContact = newContact => {
     setContacts(prevContacts => {
       return [...prevContacts, newContact];
     });
   };
 
-  // ф-ція повертає змінений стану контактів (видалення)
+  
   const deleteContact = contactId => {
     setContacts(prevContacts => {
       return prevContacts.filter(contact => contact.id !== contactId);
     });
   };
 
-  // Збереження контактів у локальному сховищі при зміні станів
+  
   useEffect(() => {
     try {
       localStorage.setItem('contacts', JSON.stringify(contacts));

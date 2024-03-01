@@ -1,15 +1,10 @@
 import css from './ContactForm.module.css';
-//бібл форм Formik + бібл валідації yup: npm install formik yup
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-//namespace import
 import * as Yup from 'yup';
-//хук унікальних ідентифікаторів полів useId
 import { useId } from 'react';
-// import { useState } from 'react'; formik створюю state сам
-// бібл генерації ідентифікаторів : npm install nanoid
 import { nanoid } from 'nanoid';
 
-// Об'являємо схему валідації об'єкта
+// validation
 const ContactFormSchema = Yup.object().shape({
   name: Yup.string()
     .min(3, 'Too short name!')
@@ -41,9 +36,9 @@ export default function ContactForm({ onAdd }) {
         onAdd(newContact);
         resetForm();
       }}
-      validationSchema={ContactFormSchema} // схема валидации
-      validationOnBlur={false} // нет валидации при выходе из поля
-      validateOnChange={false} // нет валидации при каждом изменении значений
+      validationSchema={ContactFormSchema} 
+      validationOnBlur={false} 
+      validateOnChange={false} 
     >
       <Form className={css.form}>
         <label htmlFor={nameFieldId}>Name</label>
